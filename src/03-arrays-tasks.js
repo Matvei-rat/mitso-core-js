@@ -127,16 +127,15 @@ function distinct(arr) {
 }
 
 function group(array, keySelector, valueSelector) {
-  const map = new Map();
-  array.forEach((item) => {
+  return array.reduce((map, item) => {
     const key = keySelector(item);
     const value = valueSelector(item);
     if (!map.has(key)) {
       map.set(key, []);
     }
     map.get(key).push(value);
-  });
-  return map;
+    return map;
+  }, new Map());
 }
 
 function selectMany(arr, childrenSelector) {
@@ -149,6 +148,8 @@ function getElementByIndexes(arr, indexes) {
 
 function swapHeadAndTail(arr) {
   const len = arr.length;
+  if (len <= 1) return arr;
+
   const half = Math.floor(len / 2);
   const head = arr.slice(0, half);
   const tail = arr.slice(-half);
